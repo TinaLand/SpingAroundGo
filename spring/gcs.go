@@ -8,8 +8,10 @@ import (
     "cloud.google.com/go/storage"
 )
 
+// GCS service account
+
 const (
-    BUCKET_NAME = "YOUR_BUCKET_NAME"
+    BUCKET_NAME = "spring-bucket-1"
 )
 
 func saveToGCS(r io.Reader, objectName string) (string, error) {
@@ -30,6 +32,7 @@ object := client.Bucket(BUCKET_NAME).Object(objectName)
         return "", err
     }
 
+    // public read, could set service account to improve security
     if err := object.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
         return "", err
     }
